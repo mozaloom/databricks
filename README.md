@@ -1,5 +1,5 @@
-# assimilate-databricks
-A repo to assimilate databricks
+# databricks
+A repo to databricks
 
 ## API Getting Started
 
