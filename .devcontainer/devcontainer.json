@@ -41,7 +41,8 @@
 				"ms-python.vscode-pylance",
 				"github.copilot",
 				"ms-vscode.makefile-tools",
-				"ms-dotnettools.csharp"
+				"ms-dotnettools.csharp",
+				"ms-vscode-remote.remote-containers"
 			]
 		}
 	},
