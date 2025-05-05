@@ -32,7 +32,7 @@ This repository provides utilities for:
 1. Clone this repository:
    ```
    git clone https://github.com/mozaloom/databricks.git
-   ```
+   
    cd databricks
    ```
 
