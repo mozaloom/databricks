@@ -1,6 +1,8 @@
 # Databricks Management Toolkit
 
 A Python toolkit for interacting with Databricks clusters and executing SQL queries against Databricks databases.
+![databricks-api](https://user-images.githubusercontent.com/58792/189719737-fcdaf61f-93d2-415b-8eea-ebb96143187d.png)
+
 
 ## Overview
 
@@ -29,8 +31,9 @@ This repository provides utilities for:
 
 1. Clone this repository:
    ```
-   git clone <repository-url>
-   cd <repository-name>
+   git clone https://github.com/mozaloom/databricks.git
+   ```
+   cd databricks
    ```
 
 2. Install dependencies:
