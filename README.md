@@ -1,61 +1,134 @@
-# databricks
-A repo to databricks
+# Databricks Management Toolkit
 
-## API Getting Started
+A Python toolkit for interacting with Databricks clusters and executing SQL queries against Databricks databases.
 
-![databricks-api](https://user-images.githubusercontent.com/58792/189719737-fcdaf61f-93d2-415b-8eea-ebb96143187d.png)
+## Overview
 
+This repository provides utilities for:
+- Listing and managing Databricks clusters
+- Executing SQL queries against Databricks databases
+- Command-line interfaces for database and cluster operations
 
-
-## Setup auth
-
-[databricks-python](https://docs.microsoft.com/en-us/azure/databricks/dev-tools/python-api)
-
-Place in Codespace secrets
-* [unix, linux, mac](https://docs.microsoft.com/en-us/azure/databricks/dev-tools/python-api#unixlinuxandmacos)
-
-```bash
-DATABRICKS_HOST
-DATABRICKS_TOKEN
-```
-
-
-## Test out CLI
+## Repository Structure
 
 ```
-databricks clusters list --output JSON | jq
-databricks fs ls dbfs:/
-databricks jobs list --output JSON | jq
+├── LICENSE
+├── Makefile
+├── README.md
+├── cli-manage-db.py           # CLI for Databricks cluster management
+├── dblib/                     # Core library package
+│   ├── __init__.py
+│   ├── manage_databricks.py   # Functions for Databricks cluster operations
+│   └── querydb.py             # Functions for SQL query execution
+├── hello_databricks_cluster.py # Example script for listing clusters
+├── hello_query_sql_db.py       # Example script for querying SQL databases
+└── requirements.txt            # Python dependencies
 ```
-## Remote connect
 
-[databricks-connect](https://docs.databricks.com/dev-tools/databricks-connect.html)
+## Installation
 
-## Databricks SQL Connector
+1. Clone this repository:
+   ```
+   git clone <repository-url>
+   cd <repository-name>
+   ```
 
-[Setup table first!](https://docs.databricks.com/dbfs/databricks-datasets.html)
+2. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
 
-[sql remote](https://docs.databricks.com/dev-tools/python-sql-connector.html)
-https://docs.databricks.com/integrations/bi/jdbc-odbc-bi.html#connection-details-cluster
+3. Set up environment variables:
+   ```
+   export DATABRICKS_HOST="<your-databricks-workspace-url>"
+   export DATABRICKS_TOKEN="<your-personal-access-token>"
+   export DATABRICKS_SERVER_HOSTNAME="<your-sql-warehouse-server>"
+   export DATABRICKS_HTTP_PATH="<your-sql-warehouse-http-path>"
+   ```
 
+## Usage
 
-## Comparing to Dask
+### Databricks Cluster Management
 
-An alternative solution to Databricks is https://tutorial.dask.org/00_overview.html[Dask] or [Ray](https://docs.ray.io/en/latest/data/dask-on-ray.html).
+The `dblib.manage_databricks` module provides functions for working with Databricks clusters:
 
-### Distributed compute
+```python
+from dblib.manage_databricks import list_clusters
 
-* [Quickstart distributed compute example](https://distributed.dask.org/en/stable/quickstart.html)
-* [For Advanced users (HDFS wordcount Enron)](https://distributed.dask.org/en/stable/examples/word-count.html)
+# List all clusters in your workspace
+clusters = list_clusters()
+```
 
-### Hands on Enron
+Example output:
+```
+Cluster name, cluster ID
+my-cluster-1, 1234-567890-abcd123
+my-cluster-2, 5678-123456-wxyz789
+```
 
-* [Download data](https://www.kaggle.com/datasets/wcukierski/enron-email-dataset) from Kaggle and upload by right-click on explorer in GitHub Codespaces
-* place in a "datasets" directory and add this directory to your `.gitignore`.  This ensures you don't check in a 1GB file to GitHub.
+### SQL Query Execution
 
-### Streamlit Example
+The `dblib.querydb` module allows you to execute SQL queries against Databricks databases:
 
-Enable enron...
+```python
+from dblib.querydb import querydb
 
-`streamlit hello --server.enableCORS=false`
-`streamlit run hello_streamlit_enron.py --server.enableCORS=false`
+# Execute a SQL query
+results = querydb("SELECT * FROM default.data LIMIT 2")
+```
+
+### Command-Line Interface
+
+#### Cluster Management CLI
+
+Use the cluster management CLI to list clusters:
+
+```
+python cli-manage-db.py list-clusters
+```
+
+For help:
+```
+python cli-manage-db.py --help
+```
+
+#### SQL Query CLI
+
+Use the SQL query CLI to execute queries:
+
+```
+python hello_query_sql_db.py query --query "SELECT * FROM default.diamonds LIMIT 2"
+```
+
+For help:
+```
+python hello_query_sql_db.py --help
+```
+
+## Environment Variables
+
+The following environment variables need to be set:
+
+- `DATABRICKS_HOST`: Your Databricks workspace URL (e.g., `https://your-org.cloud.databricks.com`)
+- `DATABRICKS_TOKEN`: Your Databricks personal access token
+- `DATABRICKS_SERVER_HOSTNAME`: Your SQL warehouse server hostname
+- `DATABRICKS_HTTP_PATH`: Your SQL warehouse HTTP path
+
+## Dependencies
+
+- `databricks-cli`: Official Databricks CLI for cluster management
+- `databricks-sql-connector`: SQL connector for Databricks
+- `click`: Library for creating command-line interfaces
+
+## Development
+
+To contribute to this project:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## License
+
+See the [LICENSE](LICENSE) file for details.
